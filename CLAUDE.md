@@ -1,0 +1,22 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Status
+
+Freshly scaffolded from Create Next App; no application code beyond the starter page yet.
+
+## Commands
+
+- `npm run dev` — dev server at http://localhost:3000
+- `npm run build` / `npm run start` — production build / serve
+- `npm run lint` — ESLint (flat config in `eslint.config.mjs`, uses `eslint-config-next`)
+
+No test runner is configured.
+
+## Stack and setup notes
+
+- Next.js 16 (App Router) with React 19 and TypeScript. Source lives in `src/app/`.
+- Path alias: `@/*` → `./src/*`.
+- Tailwind CSS v4 is wired through Turbopack in `next.config.ts` (`@tailwindcss/turbopack` loader applied to `*.css`), not through a PostCSS config. Styles are set up via `@import "tailwindcss"` in `src/app/globals.css`.
+- Theme colors are CSS variables (`--background`, `--foreground`) in `globals.css`, with a `prefers-color-scheme: dark` override, exposed to Tailwind via `@theme inline`. Fonts are Geist, loaded with `next/font` in `src/app/layout.tsx`.
