@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lifting Diaries
 
-## Getting Started
+A web app for logging and reviewing gym workouts. Users sign in, record workouts made up of exercises and sets (reps and weight), and browse what they logged on any given day.
 
-First, run the development server:
+## What's built so far
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Authentication** — sign in / sign up via Clerk (modal buttons in the shared header, user menu when signed in). Route protection runs through `src/proxy.ts`.
+- **Shared layout** — header with the Lifting Diaries logo (top left) and auth controls (top right), used by every page.
+- **Dashboard** (`/dashboard`) — a calendar next to a card listing the signed-in user's workouts for the selected date, showing each workout's name, duration, exercise count and set count. If nothing is logged for that day, an "Add a new log" button is shown. The selected date lives in the URL (`?date=yyyy-MM-dd`).
+- **Database schema** — Drizzle schema and relations for `exercises` (shared catalog plus user-created), `workouts`, `workout_exercises` and `sets`. Weights are stored in kg.
+- **Data layer** — query helpers in `src/data/`, which only ever return the current user's data.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Not built yet: the "add a log" flow (the button links to `/workouts/new`, which doesn't exist yet).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Next.js 16](https://nextjs.org) (App Router), React 19, TypeScript
+- [Tailwind CSS v4](https://tailwindcss.com) with [shadcn/ui](https://ui.shadcn.com) components (built on Base UI) and lucide icons
+- [Clerk](https://clerk.com) for authentication
+- [Neon](https://neon.tech) serverless Postgres with [Drizzle ORM](https://orm.drizzle.team) and drizzle-kit migrations
+- [date-fns](https://date-fns.org) for date handling and formatting, [react-day-picker](https://daypicker.dev) for the calendar
 
-## Learn More
+## Project conventions
 
-To learn more about Next.js, take a look at the following resources:
+Coding standards live in `docs/` and are mandatory:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `docs/data-fetching.md` — all data fetching happens in server components, through Drizzle helpers in `src/data/` (no raw SQL, no route handlers or client-side fetching). Every query is scoped to the logged-in user.
+- `docs/ui.md` — UI is composed from shadcn/ui components only; dates are formatted with date-fns (`do MMM yyyy`).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Getting started
 
-## Deploy on Vercel
+1. Install dependencies:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Create a `.env` file with your credentials:
+
+   ```
+   DATABASE_URL=<Neon Postgres connection string>
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<Clerk publishable key>
+   CLERK_SECRET_KEY=<Clerk secret key>
+   ```
+
+3. Apply the database migrations in `drizzle/` (e.g. `npx drizzle-kit migrate`).
+
+4. Start the dev server at http://localhost:3000:
+
+   ```bash
+   npm run dev
+   ```
+
+## Scripts
+
+- `npm run dev` — development server
+- `npm run build` / `npm run start` — production build / serve
+- `npm run lint` — ESLint
