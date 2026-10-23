@@ -60,7 +60,7 @@ export default async function DashboardPage({
                   nativeButton={false}
                   render={
                     <Link
-                      href={`/workouts/new?date=${format(date, "yyyy-MM-dd")}`}
+                      href={`/dashboard/workout/new?date=${format(date, "yyyy-MM-dd")}`}
                     />
                   }
                 >

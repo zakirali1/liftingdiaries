@@ -1,6 +1,7 @@
 import { auth } from '@clerk/nextjs/server';
 import { addDays, startOfDay } from 'date-fns';
 import { db } from '@/db';
+import { workouts } from '@/db/schema';
 
 export async function getWorkoutsForDate(date: Date) {
   const { userId } = await auth();
@@ -28,4 +29,16 @@ export async function getWorkoutsForDate(date: Date) {
     exerciseCount: workout.workoutExercises.length,
     setCount: workout.workoutExercises.reduce((total, we) => total + we.sets.length, 0),
   }));
+}
+
+export async function createWorkout(data: { name: string | null; startedAt: Date }) {
+  const { userId } = await auth();
+  if (!userId) throw new Error('Unauthorized');
+
+  const [workout] = await db
+    .insert(workouts)
+    .values({ ...data, userId })
+    .returning();
+
+  return workout;
 }
