@@ -9,6 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `docs/auth.md` — Authentication standards (Clerk only, server-side `auth()`, route protection, sign-in/up UI). Read before touching anything auth-related.
 - `docs/data-fetching.md` — Data fetching and DB access standards (server components only, `/data` helpers with Drizzle, no raw SQL, users only see their own data). Read before fetching or mutating any data.
 - `docs/data-mutations.md` — Data mutation standards (`/data` Drizzle helpers, server actions in colocated `actions.ts`, typed params, no `FormData`, zod validation). Read before writing any insert/update/delete.
+- `docs/server-components.md` — Server component standards (`params` and `searchParams` are Promises and MUST be awaited, `notFound()` handling). Read before writing or changing any page or layout.
 - `docs/ui.md` — UI coding standards (shadcn/ui components only, date-fns date formatting). Read before writing or changing any UI.
 
 ## Status
