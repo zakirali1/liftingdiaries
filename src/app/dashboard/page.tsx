@@ -60,7 +60,7 @@ export default async function DashboardPage({
                   nativeButton={false}
                   render={
                     <Link
-                      href={`/workouts/new?date=${format(date, "yyyy-MM-dd")}`}
+                      href={`/dashboard/workout/new?date=${format(date, "yyyy-MM-dd")}`}
                     />
                   }
                 >
@@ -89,6 +89,15 @@ export default async function DashboardPage({
                       {workout.exerciseCount} exercises
                     </Badge>
                     <Badge variant="secondary">{workout.setCount} sets</Badge>
+                    <Button
+                      className="ml-auto"
+                      variant="outline"
+                      size="sm"
+                      nativeButton={false}
+                      render={<Link href={`/dashboard/workout/${workout.id}`} />}
+                    >
+                      Edit
+                    </Button>
                   </CardContent>
                 </Card>
               ))
