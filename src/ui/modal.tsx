@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { XIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 export function Modal({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -25,14 +27,16 @@ export function Modal({ children }: { children: React.ReactNode }) {
         className="relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
+        <Button
           type="button"
+          variant="secondary"
+          size="icon-sm"
           aria-label="Close"
           onClick={() => router.back()}
-          className="absolute -top-3 -right-3 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white text-black shadow"
+          className="absolute -top-3 -right-3 z-10 rounded-full shadow"
         >
-          ×
-        </button>
+          <XIcon />
+        </Button>
         {children}
       </div>
     </div>

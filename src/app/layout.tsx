@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { DumbbellIcon } from 'lucide-react'
 import './globals.css'
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -39,11 +40,11 @@ export default function RootLayout({
             </Link>
             <div className="flex items-center gap-4">
             <Show when="signed-out">
-              <SignInButton mode="modal" />
+              <SignInButton mode="modal">
+                <Button variant="ghost">Sign In</Button>
+              </SignInButton>
               <SignUpButton mode="modal">
-                <button className="bg-purple-700 text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
-                  Sign Up
-                </button>
+                <Button>Sign Up</Button>
               </SignUpButton>
             </Show>
             <Show when="signed-in">
